@@ -329,7 +329,7 @@ bool frame_parse(const QByteArray &message)
             bat_info_idx = bat_chl - 1;
 
         // 获取bms连接状态
-        if( rec_buff[rec_data_base_idx] & (quint8)bit(1) )
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BMS_CONN) )
             bat_info_buff[ bat_info_idx ].is_bms_conn = true;
         else
         {
@@ -338,11 +338,24 @@ bool frame_parse(const QByteArray &message)
             qDebug("通道%d电池没有连接", bat_info_idx + 1);
             continue;
         }
-        // 判断是否充满
-        if( rec_buff[rec_data_base_idx] & (quint8)bit(0) )
+        // 判断电池是否充满
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_FULL) )
             bat_info_buff[ bat_info_idx ].is_bat_full = true;
         else
             bat_info_buff[ bat_info_idx ].is_bat_full = false;
+
+        // 判断电池是否连接
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_CONN) )
+            bat_info_buff[ bat_info_idx ].is_bat_conn = true;
+        else
+            bat_info_buff[ bat_info_idx ].is_bat_conn = false;
+
+        // 判断电池是否反接
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_REVERSE) )
+            bat_info_buff[ bat_info_idx ].is_bat_reverse = true;
+        else
+            bat_info_buff[ bat_info_idx ].is_bat_reverse = false;
+
         // 获取温度1
         u16_data = get_u16_data_low_byte( &rec_buff[rec_data_base_idx + 1] );
         bat_info_buff[ bat_info_idx ].tmp_1 = (float)u16_data / 10;
@@ -403,6 +416,24 @@ void MainWindow::disp_bat_info(void)
         detail = "";
         QTextCursor cursor(MainWindow::QTextDispTab[idx]->textCursor());
         cursor.movePosition(QTextCursor::End);
+
+        //  显示电池连接状态
+        if( bat_info_buff[idx].is_bat_conn != true )
+        {
+            if( bat_info_buff[idx].is_bat_reverse != true )
+            {
+                detail = detail + MainWindow::tr("电池连接状态： ") + "未连接" + "\n";
+            }
+            else
+            {
+                detail = detail + MainWindow::tr("电池连接状态： ") + "反接" + "\n";
+            }
+
+        }
+        else
+        {
+            detail = detail + MainWindow::tr("电池连接状态： ") + "已连接" + "\n";
+        }
 
         // 显示bms连接状态，如果未连接，直接显示未连接
         if( bat_info_buff[idx].is_bms_conn != true )

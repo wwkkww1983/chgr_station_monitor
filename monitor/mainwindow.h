@@ -29,11 +29,18 @@
 #define    set_bit( value, n )     ( (value) |= bit(n) )
 #define    reset_bit( value, n )   ( (value) &= (~bit(n)) )
 
+// 传给上位机的电池信息，表示状态的字节，里面的相关位的定义
+#define    IDX_BIT_IS_BAT_FULL         0
+#define    IDX_BIT_IS_BMS_CONN         1
+#define    IDX_BIT_IS_BAT_CONN         2
+#define    IDX_BIT_IS_BAT_REVERSE      3
 
 typedef struct _bat_info
 {
     uint8_t is_bms_conn;
     uint8_t is_bat_full;
+    uint8_t is_bat_conn;
+    uint8_t is_bat_reverse;
     float tmp_1;
     float tmp_2;
     float single_volt_max;
