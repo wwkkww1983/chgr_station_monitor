@@ -8,6 +8,8 @@
 #include <QTimerEvent>
 #include <QTimer>
 #include <QTextBrowser>
+#include <QDateTime>
+#include <QMessageBox>
 
 #include "mytcpclient.h"
 
@@ -24,6 +26,8 @@
 #define    BAT_NOT_FULL 0
 
 #define    QUERY_TIME_OUT    5000 //5s
+#define    MONITOR_TIME_OUT  1000 //1s
+#define    CURRENT_SYS_TIME_OUT  1000 //1s
 
 #define    bit( n )                ( 1 << ( n ) )
 #define    set_bit( value, n )     ( (value) |= bit(n) )
@@ -34,6 +38,7 @@
 #define    IDX_BIT_IS_BMS_CONN         1
 #define    IDX_BIT_IS_BAT_CONN         2
 #define    IDX_BIT_IS_BAT_REVERSE      3
+#define    IDX_BIT_IS_BAT_CHGRING      4
 
 typedef struct _bat_info
 {
@@ -41,6 +46,7 @@ typedef struct _bat_info
     uint8_t is_bat_full;
     uint8_t is_bat_conn;
     uint8_t is_bat_reverse;
+    uint8_t is_bat_chgring;
     float tmp_1;
     float tmp_2;
     float single_volt_max;
@@ -56,6 +62,15 @@ typedef struct _bat_info
     uint8_t warn_4;
 }BatInfoDef;
 
+typedef struct _sys_time_def
+{
+    uint8_t year;    // Äê
+    uint8_t month;    // ÔÂ
+    uint8_t day;      // ÈÕ
+    uint8_t hour;     // Ê±
+    uint8_t min;      // ·Ö
+    uint8_t sec;      // Ãë
+}Sys_TimeDef;
 
 /* Table of CRC values for high-order byte */
 static const uint8_t table_crc_hi[] = {
@@ -146,12 +161,17 @@ private slots:
     * soft timer
     *****************/
     void onTimeout_Query();
+    void onTimeout_Monitor();
+    void onTimeout_DispSysTime();
+
+    void on_pushButton_clicked();
 
 signals:
     void QueryTimeout();
+    void MonitorTimeout();
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent  = nullptr);
     ~MainWindow();
 
     void disp_bat_info(void);
@@ -172,7 +192,11 @@ private:
     QString messageTCP = "[TCP] ";
     QTextBrowser *QTextDispTab[BAT_NUM];
 
-    QTimer *QueryTimer = NULL;
+    QTimer *QueryTimer = nullptr;
+    QTimer *MonitorTimer = nullptr;
+    QTimer *CurrentSysTime = nullptr;
+
+    Sys_TimeDef m_monitor_time;
 };
 
 #endif // MAINWINDOW_H

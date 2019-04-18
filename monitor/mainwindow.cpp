@@ -7,8 +7,8 @@
 #define    OFFSET_DATA_AREA           ( (REC_HEADER_LEN) + 11 )
 #define    OFFSET_SINGLE_BAT_INFO     (23)
 
-BatInfoDef bat_info_buff[BAT_NUM];
-quint8 rec_buff[REC_BUFF_MAX_LEN] = {0};
+static BatInfoDef bat_info_buff[BAT_NUM];
+static quint8 rec_buff[REC_BUFF_MAX_LEN] = {0};
 
 void initBatInfoBuffer(void)
 {
@@ -61,9 +61,18 @@ MainWindow::MainWindow(QWidget *parent) :
     MainWindow::QTextDispTab[ 14 ] = ui->textBrowser_Unit15;
     MainWindow::QTextDispTab[ 15 ] = ui->textBrowser_Unit16;
 
-    // create timer
+    // create query timer
     QueryTimer = new QTimer(this);
-    connect(QueryTimer, SIGNAL(timeout()),this, SLOT(onTimeout_Query()));
+
+    // create monitor timer
+    MonitorTimer = new QTimer(this);
+
+    // current sys time
+    CurrentSysTime = new QTimer(this);
+    CurrentSysTime->start(CURRENT_SYS_TIME_OUT);
+    connect(CurrentSysTime, SIGNAL(timeout()), this, SLOT(onTimeout_DispSysTime()));
+    MainWindow::onTimeout_DispSysTime();
+
     connect(ui->button_TcpClient, SIGNAL(clicked()), this, SLOT(onTcpClientButtonClicked()));
 }
 
@@ -94,7 +103,7 @@ void MainWindow::onTcpClientButtonClicked()
 
     if (setupConnection(TCPCLIENT))
     {
-//        ui->statusBar->showMessage(messageTCP + "Connecting to " + tcpClientTargetAddr.toString() + ": " + QString::number(tcpClientTargetPort), 0);
+        ui->statusBar->showMessage(messageTCP + "Connecting to " + tcpClientTargetAddr.toString() + ": " + QString::number(tcpClientTargetPort), 0);
         ui->lineEdit_TcpClientTargetIP->setDisabled(true);
         ui->lineEdit_TcpClientTargetPort->setDisabled(true);
         ui->button_TcpClient->setText("停止");
@@ -107,8 +116,17 @@ void MainWindow::onTcpClientButtonClicked()
         QueryTimer->start( QUERY_TIME_OUT );
         qDebug("start query timer");
         connect(QueryTimer, SIGNAL(timeout()),this, SLOT(onTcpClientSendMessage()));
-
         connect(this, SIGNAL(QueryTimeout()), SLOT(onTcpClientSendMessage()));
+
+        // start monitor timer
+        MonitorTimer->start( MONITOR_TIME_OUT );
+        memset(&m_monitor_time, 0, sizeof(m_monitor_time));
+        connect(MonitorTimer, SIGNAL(timeout()),this, SLOT(onTimeout_Monitor()));
+        MainWindow::onTimeout_Monitor();
+
+//        QString detail = "0时0分0秒";
+//        ui->lineEdit_MonitorTime->setAlignment(Qt::AlignRight);
+//        ui->lineEdit_MonitorTime->setText(detail);
     }
 
 //    saveSettings();
@@ -135,7 +153,7 @@ void MainWindow::onTcpClientNewConnection(const QString &from, quint16 port)
 //    ui->lineEdit_TcpClientSend->setDisabled(false);
 //    ui->textBrowser_TcpClientMessage->setDisabled(false);
 
-//    ui->statusBar->showMessage(messageTCP + "Connected to " + from + ": " + QString::number(port), 0);
+    ui->statusBar->showMessage(messageTCP + "Connected to " + from + ": " + QString::number(port), 0);
     connect(ui->button_TcpClient, SIGNAL(clicked()), this, SLOT(onTcpClientDisconnectButtonClicked()));
 
     connect(mytcpclient, SIGNAL(newMessage(QString, QByteArray)), this, SLOT(onTcpClientAppendMessage(QString, QByteArray)));
@@ -143,7 +161,20 @@ void MainWindow::onTcpClientNewConnection(const QString &from, quint16 port)
 //    connect(ui->lineEdit_TcpClientSend, SIGNAL(returnPressed()), this, SLOT(onTcpClientSendMessage()));
 
     emit QueryTimeout();
-    qDebug("emit timeout signal");
+    qDebug("emit query timeout signal");
+
+    if( !MonitorTimer->isActive() )
+    {
+        // start monitor timer
+        MonitorTimer->start( MONITOR_TIME_OUT );
+        memset(&m_monitor_time, 0, sizeof(m_monitor_time));
+        connect(MonitorTimer, SIGNAL(timeout()),this, SLOT(onTimeout_Monitor()));
+        MainWindow::onTimeout_Monitor();
+
+//        QString detail = "0时0分0秒";
+//        ui->lineEdit_MonitorTime->setAlignment(Qt::AlignRight);
+//        ui->lineEdit_MonitorTime->setText(detail);
+    }
 }
 
 /***********************************
@@ -155,7 +186,7 @@ void MainWindow::onTcpClientStopButtonClicked()
 {
     disconnect(ui->button_TcpClient, SIGNAL(clicked()), this, SLOT(onTcpClientStopButtonClicked()));
 
-//    ui->statusBar->showMessage(messageTCP + "Stopped", 2000);
+    ui->statusBar->showMessage(messageTCP + "Stopped", 2000);
     disconnect(mytcpclient, SIGNAL(myClientConnected(QString, quint16)), this, SLOT(onTcpClientNewConnection(QString, quint16)));
     disconnect(mytcpclient, SIGNAL(connectionFailed()), this, SLOT(onTcpClientTimeOut()));
     ui->button_TcpClient->setText("启动");
@@ -168,6 +199,18 @@ void MainWindow::onTcpClientStopButtonClicked()
 //    ui->textBrowser_TcpClientMessage->setDisabled(true);
 
     connect(ui->button_TcpClient, SIGNAL(clicked()), this, SLOT(onTcpClientButtonClicked()));
+
+    // stop query timer
+    QueryTimer->stop();
+    qDebug("stop query timer");
+    disconnect(QueryTimer, SIGNAL(timeout()),this, SLOT(onTcpClientSendMessage()));
+
+    // stop monitor timer
+    MonitorTimer->stop();
+    memset(&m_monitor_time, 0, sizeof(m_monitor_time));
+    disconnect(MonitorTimer, SIGNAL(timeout()),this, SLOT(onTimeout_Monitor()));
+    // 清空显示区域
+    ui->lineEdit_MonitorTime->clear();
 }
 
 /***********************************
@@ -177,7 +220,7 @@ void MainWindow::onTcpClientStopButtonClicked()
  ***********************************/
 void MainWindow::onTcpClientTimeOut()
 {
-//    ui->statusBar->showMessage(messageTCP + "Connection time out", 2000);
+    ui->statusBar->showMessage(messageTCP + "Connection time out", 2000);
     disconnect(ui->button_TcpClient, SIGNAL(clicked()), this, SLOT(onTcpClientStopButtonClicked()));
     disconnect(mytcpclient, SIGNAL(myClientConnected(QString, quint16)), this, SLOT(onTcpClientNewConnection(QString, quint16)));
     disconnect(mytcpclient, SIGNAL(connectionFailed()), this, SLOT(onTcpClientTimeOut()));
@@ -193,6 +236,13 @@ void MainWindow::onTcpClientTimeOut()
     QueryTimer->stop();
     qDebug("stop query timer");
     disconnect(QueryTimer, SIGNAL(timeout()),this, SLOT(onTcpClientSendMessage()));
+
+    // stop monitor timer
+    MonitorTimer->stop();
+    memset(&m_monitor_time, 0, sizeof(m_monitor_time));
+    disconnect(MonitorTimer, SIGNAL(timeout()),this, SLOT(onTimeout_Monitor()));
+    // 清空显示区域
+    ui->lineEdit_MonitorTime->clear();
 }
 
 /***********************************
@@ -212,7 +262,7 @@ void MainWindow::onTcpClientDisconnectButtonClicked()
  ***********************************/
 void MainWindow::onTcpClientDisconnected()
 {
-//    ui->statusBar->showMessage(messageTCP + "Disconnected from server", 2000);
+    ui->statusBar->showMessage(messageTCP + "Disconnected from server", 2000);
     disconnect(mytcpclient, SIGNAL(myClientDisconnected()), this, SLOT(onTcpClientDisconnected()));
     disconnect(mytcpclient, SIGNAL(newMessage(QString, QByteArray)), this, SLOT(onTcpClientAppendMessage(QString, QByteArray)));
 //    disconnect(ui->button_TcpClientSend, SIGNAL(clicked()), this, SLOT(onTcpClientSendMessage()));
@@ -237,16 +287,23 @@ void MainWindow::onTcpClientDisconnected()
     {
         MainWindow::QTextDispTab[idx]->clear();
     }
+    ui->lineEdit_MonitorTime->clear();
 
     // stop query timer
     QueryTimer->stop();
     qDebug("stop query timer");
     disconnect(QueryTimer, SIGNAL(timeout()),this, SLOT(onTcpClientSendMessage()));
+
+    // stop monitor timer
+    MonitorTimer->stop();
+    qDebug("stop monitor timer");
+    memset(&m_monitor_time, 0, sizeof(m_monitor_time));
+    disconnect(MonitorTimer, SIGNAL(timeout()),this, SLOT(onTimeout_Monitor()));
 }
 
 quint16 get_u16_data_low_byte( quint8 *addr )
 {
-    return (quint16)( ( addr[0] & 0xFF ) |\
+    return (quint16)( ( addr[0] & 0xFF ) | \
             ( (quint16)( ( addr[1] & 0xFF ) << 8 ) & 0xFF00 ) );
 }
 
@@ -258,7 +315,7 @@ bool frame_parse(const QByteArray &message)
     QByteArray::const_iterator it = message.begin();
     for( quint16 idx=0 ; it != message.end(); it++, idx++ )
     {
-        rec_buff[idx] = (quint8)*it;
+        rec_buff[idx] = (quint8)(*it);
     }
 
     frame_len = rec_buff[4] & 0xff;
@@ -328,6 +385,24 @@ bool frame_parse(const QByteArray &message)
         else
             bat_info_idx = bat_chl - 1;
 
+        // 判断电池是否连接
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_CONN) )
+            bat_info_buff[ bat_info_idx ].is_bat_conn = true;
+        else
+            bat_info_buff[ bat_info_idx ].is_bat_conn = false;
+
+        // 判断电池是否反接
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_REVERSE) )
+            bat_info_buff[ bat_info_idx ].is_bat_reverse = true;
+        else
+            bat_info_buff[ bat_info_idx ].is_bat_reverse = false;
+
+        // 判断电池是否在充电
+        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_CHGRING) )
+            bat_info_buff[ bat_info_idx ].is_bat_chgring = true;
+        else
+            bat_info_buff[ bat_info_idx ].is_bat_chgring = false;
+
         // 获取bms连接状态
         if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BMS_CONN) )
             bat_info_buff[ bat_info_idx ].is_bms_conn = true;
@@ -343,18 +418,6 @@ bool frame_parse(const QByteArray &message)
             bat_info_buff[ bat_info_idx ].is_bat_full = true;
         else
             bat_info_buff[ bat_info_idx ].is_bat_full = false;
-
-        // 判断电池是否连接
-        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_CONN) )
-            bat_info_buff[ bat_info_idx ].is_bat_conn = true;
-        else
-            bat_info_buff[ bat_info_idx ].is_bat_conn = false;
-
-        // 判断电池是否反接
-        if( rec_buff[rec_data_base_idx] & (quint8)bit(IDX_BIT_IS_BAT_REVERSE) )
-            bat_info_buff[ bat_info_idx ].is_bat_reverse = true;
-        else
-            bat_info_buff[ bat_info_idx ].is_bat_reverse = false;
 
         // 获取温度1
         u16_data = get_u16_data_low_byte( &rec_buff[rec_data_base_idx + 1] );
@@ -435,6 +498,16 @@ void MainWindow::disp_bat_info(void)
             detail = detail + MainWindow::tr("电池连接状态： ") + "已连接" + "\n";
         }
 
+        // 显示电池充电状态
+        if( bat_info_buff[idx].is_bat_chgring != true )
+        {
+            detail = detail + MainWindow::tr("电池充电状态： ") + "未充电" + "\n";
+        }
+        else
+        {
+            detail = detail + MainWindow::tr("电池充电状态： ") + "充电中" + "\n";
+        }
+
         // 显示bms连接状态，如果未连接，直接显示未连接
         if( bat_info_buff[idx].is_bms_conn != true )
         {
@@ -454,10 +527,10 @@ void MainWindow::disp_bat_info(void)
         // 显示电池是否充满
         if( bat_info_buff[idx].is_bat_full == true )
         {
-            detail = detail + MainWindow::tr("电池状态： ") + "已充满" + "\n";
+            detail = detail + MainWindow::tr("是否充满： ") + "已充满" + "\n";
         }
         else
-            detail = detail + MainWindow::tr("电池状态： ") + "未充满" + "\n";
+            detail = detail + MainWindow::tr("是否充满： ") + "未充满" + "\n";
 
         detail = detail + MainWindow::tr("温度1： ") + QString::number( bat_info_buff[idx].tmp_1, 'f', 1 ) + MainWindow::tr("°") + "\n";
         detail = detail + MainWindow::tr("温度2： ") + QString::number( bat_info_buff[idx].tmp_2, 'f', 1 ) + MainWindow::tr("°") + "\n";
@@ -601,3 +674,49 @@ void MainWindow::onTimeout_Query()
     qDebug("Query timeout");
 }
 
+// monitor timeout slot
+void MainWindow::onTimeout_Monitor()
+{
+    qDebug("monitor time cnt timeout");
+
+    if( m_monitor_time.sec > 59 )
+    {
+        m_monitor_time.sec = 0;
+        m_monitor_time.min += 1;
+        if( m_monitor_time.min > 59 )
+        {
+            m_monitor_time.min = 0;
+            m_monitor_time.hour += 1;
+        }
+    }
+
+    QString detail = "";
+    detail = detail + QString::number(m_monitor_time.hour, 10) + MainWindow::tr("时");
+    detail = detail + QString::number(m_monitor_time.min, 10) + MainWindow::tr("分");
+    detail = detail + QString::number(m_monitor_time.sec, 10) + MainWindow::tr("秒");
+
+    // 显示
+    ui->lineEdit_MonitorTime->setAlignment(Qt::AlignRight);
+    ui->lineEdit_MonitorTime->setText(detail);
+
+    m_monitor_time.sec ++;
+}
+
+// disp current sys time timeout slot
+void MainWindow::onTimeout_DispSysTime()
+{
+    QDateTime  date = QDateTime::currentDateTime();
+    QString str( date.toString("yyyy-MM-dd hh:mm:ss ddd") );
+
+
+//    QTime time = QTime::currentTime();
+//    QString str( time.toString(Qt::ISODate) );
+
+    ui->label_disp_sys_time->setText(str);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    QMessageBox::about(this, tr("关于"), tr("AGV_HK充电站上位机监控测试程序\r\n功能： 监测充电站自动充电的充电信息\r\nAuthor: Liyang\r\nmail: liyang@ecthf.com"));
+    return;
+}
