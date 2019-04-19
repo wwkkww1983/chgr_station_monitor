@@ -61,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent) :
     MainWindow::QTextDispTab[ 14 ] = ui->textBrowser_Unit15;
     MainWindow::QTextDispTab[ 15 ] = ui->textBrowser_Unit16;
 
+    // 清空电池缓存信息
+    memset( &bat_info_buff[0], 0, sizeof(bat_info_buff) );
+
     // create query timer
     QueryTimer = new QTimer(this);
 
@@ -518,6 +521,9 @@ void MainWindow::disp_bat_info(void)
             MainWindow::QTextDispTab[idx]->setTextColor(Qt::gray);
             MainWindow::QTextDispTab[idx]->setText(detail);
             MainWindow::QTextDispTab[idx]->setTextColor(color);
+
+            // 清空对应的电池缓存信息
+            memset( &bat_info_buff[idx], 0, sizeof(BatInfoDef) );
             continue;
         }
         else
@@ -551,6 +557,9 @@ void MainWindow::disp_bat_info(void)
         MainWindow::QTextDispTab[idx]->setTextColor(Qt::gray);
         MainWindow::QTextDispTab[idx]->setText(detail);
         MainWindow::QTextDispTab[idx]->setTextColor(color);
+
+        // 清空对应的电池缓存信息
+        memset( &bat_info_buff[idx], 0, sizeof(BatInfoDef) );
     }
 }
 
