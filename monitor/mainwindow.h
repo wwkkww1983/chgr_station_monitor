@@ -60,6 +60,7 @@ typedef struct _bat_info
     uint8_t warn_2;
     uint8_t warn_3;
     uint8_t warn_4;
+    uint16_t soh;
 }BatInfoDef;
 
 typedef struct _sys_time_def

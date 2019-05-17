@@ -468,6 +468,10 @@ bool frame_parse(const QByteArray &message)
                bat_info_buff[ bat_info_idx ].warn_2,\
                bat_info_buff[ bat_info_idx ].warn_3,\
                bat_info_buff[ bat_info_idx ].warn_4 );
+        // 获取soh信息
+        u16_data = get_u16_data_low_byte( &rec_buff[rec_data_base_idx + 23] );
+        bat_info_buff[ bat_info_idx ].soh = u16_data;
+        qDebug("通道%dsoh info：%d, u16_data:%04X", bat_info_idx + 1, bat_info_buff[ bat_info_idx ].soh, u16_data );
     }
 
     return true;
@@ -551,6 +555,7 @@ void MainWindow::disp_bat_info(void)
         detail = detail + MainWindow::tr("BMS告警字2： 0x") + QString::number( bat_info_buff[idx].warn_2, 16 ) + "\n";
         detail = detail + MainWindow::tr("BMS告警字3： 0x") + QString::number( bat_info_buff[idx].warn_3, 16 ) + "\n";
         detail = detail + MainWindow::tr("BMS告警字4： 0x") + QString::number( bat_info_buff[idx].warn_4, 16 ) + "\n";
+        detail = detail + MainWindow::tr("SOH值： ") + QString::number( bat_info_buff[idx].soh ) + MainWindow::tr("次") + "\n";
 
         // 显示
         QColor color = MainWindow::QTextDispTab[idx]->textColor();
