@@ -5,7 +5,7 @@
 #define    REC_HEADER_LEN             (4)
 
 #define    OFFSET_DATA_AREA           ( (REC_HEADER_LEN) + 11 )
-#define    OFFSET_SINGLE_BAT_INFO     (23)
+#define    OFFSET_SINGLE_BAT_INFO     (25)
 
 static BatInfoDef bat_info_buff[BAT_NUM];
 static quint8 rec_buff[REC_BUFF_MAX_LEN] = {0};
@@ -323,7 +323,7 @@ bool frame_parse(const QByteArray &message)
 
     frame_len = rec_buff[4] & 0xff;
     frame_len |= ( ( (rec_buff[5] & 0xff) << 8) & 0xFF00 );
-    qDebug("whole frame size:%d, frame_len: %d", message.size(), frame_len);
+    qDebug("whole frame size:%d, frame_len: %d, (hex:0x%04X)", message.size(), frame_len, frame_len);
 
     // 校验帧头
     quint8 buff_header_std[] = {0x55, 0xAA, 0xA5, 0x5A};
