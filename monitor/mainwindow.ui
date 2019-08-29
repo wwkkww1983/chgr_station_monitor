@@ -38,1035 +38,1153 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" rowspan="2" colspan="3">
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="title">
-       <string>监控地址</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>9</y>
+      <width>454</width>
+      <height>57</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>监控地址</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <widget class="QLabel" name="label_targetIP">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="baseSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>IP:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_TcpClientTargetIP">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="sizeIncrement">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_targetPort">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Port:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_TcpClientTargetPort">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_TcpClient">
-           <property name="text">
-            <string>启动</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QLabel" name="label_targetIP">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>IP:</string>
+         </property>
+        </widget>
        </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="6" colspan="2" alignment="Qt::AlignRight">
-     <widget class="QLabel" name="label_disp_sys_time">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>180</width>
-        <height>57</height>
-       </size>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Panel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::AutoText</enum>
-      </property>
-      <property name="textInteractionFlags">
-       <set>Qt::LinksAccessibleByMouse</set>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="7" alignment="Qt::AlignRight">
-     <widget class="QPushButton" name="pushButton">
-      <property name="maximumSize">
-       <size>
-        <width>150</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>关于</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块1</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
        <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit1">
+        <widget class="QLineEdit" name="lineEdit_TcpClientTargetIP">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>150</width>
-           <height>235</height>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
         </widget>
        </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QGroupBox" name="groupBox_3">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块2</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
        <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit2">
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_targetPort">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>150</width>
-           <height>235</height>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Port:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_TcpClientTargetPort">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
           </size>
          </property>
         </widget>
        </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QGroupBox" name="groupBox_5">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块3</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
        <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit3">
-         <property name="minimumSize">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>150</width>
-           <height>235</height>
+           <width>40</width>
+           <height>20</height>
           </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_TcpClient">
+         <property name="text">
+          <string>启动</string>
          </property>
         </widget>
        </item>
       </layout>
-     </widget>
-    </item>
-    <item row="2" column="3">
-     <widget class="QGroupBox" name="groupBox_6">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块4</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit4">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="4">
-     <widget class="QGroupBox" name="groupBox_7">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块5</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit5">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="5">
-     <widget class="QGroupBox" name="groupBox_8">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块6</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit6">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="6">
-     <widget class="QGroupBox" name="groupBox_9">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块7</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit7">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="7">
-     <widget class="QGroupBox" name="groupBox_10">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块8</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_12">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit8">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QGroupBox" name="groupBox_11">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块9</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignJustify</set>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_13" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit9">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QGroupBox" name="groupBox_18">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块10</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_20" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit10">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="2">
-     <widget class="QGroupBox" name="groupBox_14">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块11</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_16" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit11">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="3">
-     <widget class="QGroupBox" name="groupBox_15">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块12</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_17" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit12">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="4">
-     <widget class="QGroupBox" name="groupBox_12">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块13</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit13">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="5">
-     <widget class="QGroupBox" name="groupBox_13">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块14</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_15" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit14">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="6">
-     <widget class="QGroupBox" name="groupBox_17">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块15</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_19" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit15">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="7">
-     <widget class="QGroupBox" name="groupBox_16">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>170</width>
-        <height>320</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>模块16</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_18" stretch="0">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="sizeConstraint">
-        <enum>QLayout::SetMinimumSize</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser_Unit16">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>235</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="3" rowspan="2">
-     <widget class="QGroupBox" name="groupBox_19">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>120</width>
-        <height>52</height>
-       </size>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::RightToLeft</enum>
-      </property>
-      <property name="title">
-       <string>已监控时间</string>
-      </property>
-      <widget class="QLineEdit" name="lineEdit_MonitorTime">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>100</width>
-         <height>25</height>
-        </rect>
-       </property>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label_disp_sys_time">
+    <property name="geometry">
+     <rect>
+      <x>1200</x>
+      <y>9</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>180</width>
+      <height>57</height>
+     </size>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::LinksAccessibleByMouse</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>1296</x>
+      <y>43</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>150</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>关于</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块1</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit1">
        <property name="minimumSize">
         <size>
-         <width>100</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>25</height>
+         <width>150</width>
+         <height>235</height>
         </size>
        </property>
       </widget>
-     </widget>
-    </item>
-   </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块2</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit2">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>351</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块3</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit3">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_6">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>522</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块4</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit4">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_7">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>693</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块5</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_9">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit5">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_8">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>864</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块6</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_10">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit6">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_9">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1035</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块7</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_11">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit7">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_10">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1206</x>
+      <y>72</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块8</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_12">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit8">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_11">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块9</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignBottom|Qt::AlignJustify</set>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_13" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit9">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_18">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块10</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_20" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit10">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_14">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>351</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块11</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_16" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit11">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_15">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>522</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块12</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_17" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit12">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_12">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>693</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块13</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_14" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit13">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_13">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>864</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块14</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_15" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit14">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_17">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1035</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块15</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_19" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit15">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_16">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1206</x>
+      <y>381</y>
+      <width>170</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>170</width>
+      <height>320</height>
+     </size>
+    </property>
+    <property name="title">
+     <string>模块16</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_18" stretch="0">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QTextBrowser" name="textBrowser_Unit16">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>235</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_19">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>567</x>
+      <y>11</y>
+      <width>120</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>120</width>
+      <height>52</height>
+     </size>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="title">
+     <string>已监控时间</string>
+    </property>
+    <widget class="QLineEdit" name="lineEdit_MonitorTime">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>100</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

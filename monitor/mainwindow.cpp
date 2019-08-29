@@ -7,8 +7,13 @@
 #define    OFFSET_DATA_AREA           ( (REC_HEADER_LEN) + 11 )
 #define    OFFSET_SINGLE_BAT_INFO     (25)
 
+#define    OFFSET_SINGLE_CHGR_STATION_INFO     (9)
+
+
 static BatInfoDef bat_info_buff[BAT_NUM];
 static quint8 rec_buff[REC_BUFF_MAX_LEN] = {0};
+
+static ChgrStationInfoDef chgr_station_info_buff[CHGR_STATION_NUM];
 
 void initBatInfoBuffer(void)
 {
@@ -77,6 +82,11 @@ MainWindow::MainWindow(QWidget *parent) :
     MainWindow::onTimeout_DispSysTime();
 
     connect(ui->button_TcpClient, SIGNAL(clicked()), this, SLOT(onTcpClientButtonClicked()));
+
+    m_query_step = STEP_QUERY_BAT;
+    qInstallMessageHandler(myMsgOutput);
+
+    this->setFixedSize( this->width (),this->height ());
 }
 
 MainWindow::~MainWindow()
@@ -310,10 +320,103 @@ quint16 get_u16_data_low_byte( quint8 *addr )
             ( (quint16)( ( addr[1] & 0xFF ) << 8 ) & 0xFF00 ) );
 }
 
-bool frame_parse(const QByteArray &message)
+bool frame_parse_chgr_station(const QByteArray &message)
 {
     quint16 frame_len = 0;   // 报文长度，从报文长度高字节之后，CRC校验低字节之前的部分
 
+    qDebug("\r\n\r\n<<------------解析充电站信息---------->>");
+    // 把所有数据读取出来
+    QByteArray::const_iterator it = message.begin();
+    for( quint16 idx=0 ; it != message.end(); it++, idx++ )
+    {
+        rec_buff[idx] = (quint8)(*it);
+    }
+
+    frame_len = rec_buff[4] & 0xff;
+    frame_len |= ( ( (rec_buff[5] & 0xff) << 8) & 0xFF00 );
+    qDebug("whole frame size:%d, frame_len: %d, (hex:0x%04X)", message.size(), frame_len, frame_len);
+
+    // 校验帧头
+    quint8 buff_header_std[] = {0x55, 0xAA, 0xA5, 0x5A};
+    for( quint16 idx = 0; idx < 4; idx ++ )
+    {
+        qDebug("chk header: %02x", rec_buff[idx] );
+        if( buff_header_std[idx] != rec_buff[idx] )
+        {
+            qDebug() << "header error";
+            return false;
+        }
+    }
+
+    // 校验crc值
+    quint16 crc_read = 0;
+    quint16 crc_calc = 0;
+
+    crc_calc = crc16( &rec_buff[4], frame_len+2  );
+    crc_read = (rec_buff[frame_len+2+4] & 0xFF) | \
+               ( ( ( rec_buff[frame_len+2+4+1] & 0xFF ) << 8) & 0xFF00 );
+    if( crc_calc != crc_read )
+    {
+        qDebug("crc check failed, crc_read:%04X, crc_calc:%04X", crc_read, crc_calc);
+        return false;
+    }
+    else
+    {
+        qDebug("crc check success, crc_read:%04X, crc_calc:%04X", crc_read, crc_calc);
+    }
+    // 获取充电站详细信息
+    quint16 loop_cnt = 0;
+    quint16 rec_data_base_idx = 0;
+    quint16 u16_data;
+
+    loop_cnt = CHGR_STATION_NUM;
+
+    // 解析所需数据
+    for(quint16 idx = 0; idx < loop_cnt; idx ++) {
+        // 更新接收缓冲区中，充电站信息存储在哪个位置
+        rec_data_base_idx = OFFSET_DATA_AREA + ( OFFSET_SINGLE_CHGR_STATION_INFO * idx );
+
+        // 判断状态
+        if( rec_buff[rec_data_base_idx] & 0x07 == 0x0 )
+            chgr_station_info_buff[idx].st = ST_IDLE;
+        else if( rec_buff[rec_data_base_idx] & 0x07 == 0x01 )
+            chgr_station_info_buff[idx].st = ST_CHGRING;
+        else if( rec_buff[rec_data_base_idx] & 0x07 == 0x02 )
+        {
+            chgr_station_info_buff[idx].st = ST_ERR;
+            if( rec_buff[rec_data_base_idx] & 0x08 != 0x00 )
+                chgr_station_info_buff[idx].err = ERR_OUTPUT;
+            if( rec_buff[rec_data_base_idx] & 0x10 != 0x00 )
+                chgr_station_info_buff[idx].err = ERR_OVER_TMP;
+        }
+        else if( rec_buff[rec_data_base_idx] & 0x07 == 0x02 )
+            chgr_station_info_buff[idx].st = ST_STOP_BY_HOST;
+        // 获取电流
+        u16_data = get_u16_data_low_byte( &rec_buff[rec_data_base_idx + 2] );
+        chgr_station_info_buff[ idx ].iout = (float)u16_data / 10;
+        qDebug("通道%d电流：%f, u16_data:%04X", idx + 1, chgr_station_info_buff[ idx ].iout, u16_data );
+
+        // 获取电压
+        u16_data = get_u16_data_low_byte( &rec_buff[rec_data_base_idx + 4] );
+        chgr_station_info_buff[ idx ].vout = (float)u16_data / 10;
+        qDebug("通道%d电压：%f, u16_data:%04X", idx + 1, chgr_station_info_buff[ idx ].vout, u16_data );
+
+        // 获取温度
+        u16_data = get_u16_data_low_byte( &rec_buff[rec_data_base_idx + 6] );
+        chgr_station_info_buff[ idx ].tmp = (float)u16_data;
+        qDebug("通道%d温度：%f, u16_data:%04X", idx + 1, chgr_station_info_buff[ idx ].tmp, u16_data );
+
+        // 获取告警
+        chgr_station_info_buff[ idx ].warn = rec_buff[rec_data_base_idx + 8];
+        qDebug("通道%d告警:%02X", idx + 1, chgr_station_info_buff[ idx ].warn );
+    }
+}
+
+bool frame_parse_bat_info(const QByteArray &message)
+{
+    quint16 frame_len = 0;   // 报文长度，从报文长度高字节之后，CRC校验低字节之前的部分
+
+    qDebug("\r\n\r\n<<------------解析电池信息---------->>");
     // 把所有数据读取出来
     QByteArray::const_iterator it = message.begin();
     for( quint16 idx=0 ; it != message.end(); it++, idx++ )
@@ -582,6 +685,28 @@ void MainWindow::onTcpClientAppendMessage(const QString &from, const QByteArray 
         return;
     }
 
+    if( message.length() == 417 )
+    {
+        if( frame_parse_bat_info( message ) ) {
+            qDebug() << "frame parse success";
+            disp_bat_info();
+        }
+        else {
+            qDebug() << "frame parse failed";
+            return;
+        }
+    }
+    else if( message.length() == 161 )
+    {
+        if( frame_parse_chgr_station( message ) )
+            qDebug() << "frame parse success";
+        else {
+            qDebug() << "frame parse failed";
+            return;
+        }
+    }
+
+#if 0
     // 解析
     if( frame_parse(message) )
     {
@@ -595,6 +720,8 @@ void MainWindow::onTcpClientAppendMessage(const QString &from, const QByteArray 
 
     // 显示
     disp_bat_info();
+#endif
+//    qDebug() << "rec_len:" << message.length();
 }
 
 /***********************************
@@ -612,14 +739,24 @@ void MainWindow::onTcpClientSendMessage()
     }
 #endif
 
-    QString text("55AAA55A07000002040000FFFF52DD");
+    QString text("");
+
+    switch( m_query_step ) {
+    case STEP_QUERY_BAT:
+        text = "55AAA55A07000002040000FFFF52DD";
+        m_query_step = STEP_QUERY_CHGR_STATION;
+        qDebug("query bat info");
+        break;
+    case STEP_QUERY_CHGR_STATION:
+        text = "55AAA55A0700000104FFFF0000F5DC";
+        m_query_step = STEP_QUERY_BAT;
+        qDebug("query chgr_station info");
+        break;
+    default:
+        break;
+    }
+
     mytcpclient->sendMessage(text);
-
-//    mytcpclient->sendMessage(text);
-
-//    QByteArray ba("Me");
-//    onTcpClientAppendMessage(ba, text.toLatin1());
-//    ui->lineEdit_TcpClientSend->clear();
 }
 
 /***********************************

@@ -9,6 +9,8 @@ QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+DEFINES += QT_MESSAGELOGCONTEXT
+
 TARGET = monitor
 TEMPLATE = app
 
@@ -28,11 +30,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    mytcpclient.cpp
+    mytcpclient.cpp \
+    dlog.cpp
 
 HEADERS += \
         mainwindow.h \
-    mytcpclient.h
+    mytcpclient.h \
+    dlog.h
 
 FORMS += \
         mainwindow.ui
@@ -41,3 +45,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
+
+RC_ICONS = res/images/logo.ico

@@ -12,20 +12,21 @@
 #include <QMessageBox>
 
 #include "mytcpclient.h"
-
+#include "dlog.h"
 
 #define TCPSERVER 10
 #define TCPCLIENT 20
 #define UDPSERVER 30
 
 #define    BAT_NUM    16
+#define    CHGR_STATION_NUM    16
 
 #define    CONN         1
 #define    DISCONN      0
 #define    BAT_FULL     1
 #define    BAT_NOT_FULL 0
 
-#define    QUERY_TIME_OUT    5000 //5s
+#define    QUERY_TIME_OUT    3000 //5s
 #define    MONITOR_TIME_OUT  1000 //1s
 #define    CURRENT_SYS_TIME_OUT  1000 //1s
 
@@ -39,6 +40,9 @@
 #define    IDX_BIT_IS_BAT_CONN         2
 #define    IDX_BIT_IS_BAT_REVERSE      3
 #define    IDX_BIT_IS_BAT_CHGRING      4
+
+#define    STEP_QUERY_BAT    0x01
+#define    STEP_QUERY_CHGR_STATION    0x02
 
 typedef struct _bat_info
 {
@@ -62,6 +66,25 @@ typedef struct _bat_info
     uint8_t warn_4;
     uint16_t soh;
 }BatInfoDef;
+
+#define  ST_IDLE    0x01
+#define  ST_CHGRING 0x02
+#define  ST_ERR     0x03
+#define  ST_STOP_BY_HOST  0x04
+
+#define  ERR_NONE     0x00
+#define  ERR_OUTPUT   0x01
+#define  ERR_OVER_TMP 0x02
+
+typedef struct _chgr_station_info
+{
+    uint8_t st;
+    uint8_t err;
+    float iout;
+    float vout;
+    float tmp;
+    uint8_t warn;
+}ChgrStationInfoDef;
 
 typedef struct _sys_time_def
 {
@@ -198,6 +221,8 @@ private:
     QTimer *CurrentSysTime = nullptr;
 
     Sys_TimeDef m_monitor_time;
+
+    quint8 m_query_step;
 };
 
 #endif // MAINWINDOW_H
